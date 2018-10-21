@@ -7,7 +7,7 @@ module.exports = async ({createNodeId, createContentDigest, baseUrl, params}) =>
     const processPage = (page) => {
       const nodeId = createNodeId(`page-item-${page.id}`);
       const object = {
-        data: page
+        pageData: page
       };
 
       return Object.assign({}, object, {
@@ -15,7 +15,7 @@ module.exports = async ({createNodeId, createContentDigest, baseUrl, params}) =>
         parent: null,
         children: [],
         internal: {
-          type: 'PageItem',
+          type: 'Page',
           content: JSON.stringify(page),
           contentDigest: createContentDigest(page)
         }

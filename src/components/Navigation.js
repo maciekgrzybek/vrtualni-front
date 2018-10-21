@@ -16,16 +16,15 @@ export default () => (
       }
     `}
     render={ (data) => {
-      const navTree = JSON.parse(data.allNavItem.edges[0].node.structure);
-      const rawNavTree = Object.keys(navTree)
-      console.log(navTree);
+      const navTree = JSON.parse(data.allNavItem.edges[1].node.structure);
+      const rawNavTree = Object.keys(navTree);
       return (
         <div>
 
           {rawNavTree.map(navItem => {
             navItem = navTree[navItem];
             return (
-              <Link to={'/'}>
+              <Link to={navItem.slug} key={navItem.slug}>
                 <h3>{navItem.title}</h3>
               </Link>
             )
