@@ -19,8 +19,11 @@ module.exports = {
     {
       resolve: 'gatsby-source-wordpress',
       options: {
-        url: 'siemano',
-        test: 'costam'
+        baseUrl: 'http://vrtualni.lndo.site/wp-json/gatsby_wp_helper/v2/',
+        parts: {
+          page: 'all',
+          nav: 'all',
+        }
       }
     },
     'gatsby-plugin-offline',
