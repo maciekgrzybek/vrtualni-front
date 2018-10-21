@@ -8,23 +8,25 @@ export default () => (
         allNavItem {
           edges {
             node {
-              ID
-              title
+              wpID
+              structure
             }
           }
         }
       }
     `}
     render={ (data) => {
-      const navTree = data.allNavItem.edges;
+      const navTree = JSON.parse(data.allNavItem.edges[0].node.structure);
+      const rawNavTree = Object.keys(navTree)
       console.log(navTree);
       return (
         <div>
 
-          {navTree.map(navItem => {
+          {rawNavTree.map(navItem => {
+            navItem = navTree[navItem];
             return (
               <Link to={'/'}>
-                <h3>{navItem.node.title} - {navItem.node.ID}</h3>
+                <h3>{navItem.title}</h3>
               </Link>
             )
           })}

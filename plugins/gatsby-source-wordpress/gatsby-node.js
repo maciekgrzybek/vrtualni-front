@@ -1,36 +1,46 @@
-const fetch = require('node-fetch');
+const navigationProcessor = require('./utils/navigationProcessor');
+const pageProcessor = require('./utils/pageProcessor');
 
-exports.sourceNodes = ({actions, createNodeId, createContentDigest}, configOptions) => {
+exports.sourceNodes = async ({actions, createNodeId, createContentDigest}, configOptions) => {
 
   const {createNode} = actions;
+  const {baseUrl, parts} = configOptions;
+  const content = [];
   delete configOptions.plugins;
 
-  const processNav = (navItem) => {
-    const nodeId = createNodeId(`nav-item-${navItem.ID}`);
-    const nodeContent = JSON.stringify(navItem);
+  for (let part in parts) {
+    const options = {
+      createNodeId,
+      createContentDigest,
+      baseUrl,
+      params: parts[part]
+    };
 
-    const nodeData = Object.assign({}, navItem, {
-      id: nodeId,
-      parent: null,
-      children: [],
-      internal: {
-        type: 'NavItem',
-        content: nodeContent,
-        contentDigest: createContentDigest(navItem)
+    content.push(new Promise((resolve,reject) => {
+      let data = null;
+
+      switch(part) {
+        case 'nav':
+          data= navigationProcessor(options);
+          break;
+        case 'page':
+          data = pageProcessor(options);
+          break;
       }
-    });
 
-    return nodeData;
-  };
+      data
+        .then((nodes) => {
 
-  return (
-    fetch('http://vrtualni.lndo.site/wp-json/gatsby_wp_helper/v2/nav/2')
-      .then((response) => response.json())
-      .then((data) => {
-        data.forEach((item) => {
-          const nodeData = processNav(item);
-          createNode(nodeData);
-        })
+        nodes.forEach((node) => {
+          createNode(node);
+        });
+        resolve();
       })
-  );
+        .catch((error) => {
+          console.log(error)
+        })
+
+    }))
+  }
+  return Promise.all(content);
 };
