@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StaticQuery, Link, graphql} from "gatsby";
 
-export default () => (
+const Navigation = ({menu}) => (
   <StaticQuery
     query={graphql`
       query {
@@ -16,7 +17,8 @@ export default () => (
       }
     `}
     render={ (data) => {
-      const navTree = JSON.parse(data.allNavItem.edges[1].node.structure);
+      const menuType = menu === 'footer' ? 0 : 1;
+      const navTree = JSON.parse(data.allNavItem.edges[menuType].node.structure);
       const rawNavTree = Object.keys(navTree);
       return (
         <div>
@@ -35,3 +37,8 @@ export default () => (
 
     }/>
 )
+
+Navigation.propTypes = {
+  menu: PropTypes.string
+}
+export default Navigation;

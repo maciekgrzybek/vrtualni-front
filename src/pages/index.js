@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'gatsby'
 
 import Layout from '../components/Layout'
-import Navigation from '../components/Navigation';
+import Navigation from '../containers/Navigation';
 
 const IndexPage = () => (
   <Layout>
-    <Navigation/>
+    <Navigation menu="primary"/>
     <h1>Hi people</h1>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>

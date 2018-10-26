@@ -2,7 +2,7 @@ import React from 'react';
 import {graphql} from 'gatsby';
 
 import Layout from '../components/Layout';
-import Seo from "../components/Seo";
+import Seo from "../containers/Seo";
 
 export default ({ data }) => {
   const {pageData} = data.allPage.edges[0].node;

@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from './Header'
 
 import './layout.css'
+import BackgroundLines from "./BackgroundLines";
 
 const Layout = ({ children, seoData }) => (
     <>
 
-      {/*<Header siteTitle={data.site.siteMetadata.title}/>*/}
+      <Header/>
+      <BackgroundLines/>
       <div
         style={{
           margin: '0 auto',
