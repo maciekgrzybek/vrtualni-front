@@ -7,9 +7,6 @@ import BackgroundLines from "./BackgroundLines";
 
 const Layout = ({ children, seoData }) => (
     <>
-
-      <Header/>
-      <BackgroundLines/>
       <div
         style={{
           margin: '0 auto',
@@ -18,6 +15,8 @@ const Layout = ({ children, seoData }) => (
           paddingTop: 0,
         }}
       >
+        <Header/>
+        <BackgroundLines/>
         {children}
       </div>
     </>
